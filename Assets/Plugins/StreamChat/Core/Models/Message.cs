@@ -45,7 +45,7 @@ namespace StreamChat.Core.Models
         /// <summary>
         /// Object with translations. Key `language` contains the original language key. Other keys contain translations
         /// </summary>
-        public IDictionary<string, string> I18n { get; set; }
+        public Dictionary<string, string> I18n { get; set; }
 
         /// <summary>
         /// Message ID is unique string identifier of the message
@@ -55,7 +55,7 @@ namespace StreamChat.Core.Models
         /// <summary>
         /// Contains image moderation information
         /// </summary>
-        public IDictionary<string, ICollection<string>> ImageLabels { get; set; }
+        public Dictionary<string, List<string>> ImageLabels { get; set; }
 
         /// <summary>
         /// List of 10 latest reactions to this message
@@ -112,12 +112,12 @@ namespace StreamChat.Core.Models
         /// <summary>
         /// An object containing number of reactions of each type. Key: reaction type (string), value: number of reactions (int)
         /// </summary>
-        public IDictionary<string, double> ReactionCounts { get; set; }
+        public Dictionary<string, double> ReactionCounts { get; set; }
 
         /// <summary>
         /// An object containing scores of reactions of each type. Key: reaction type (string), value: total score of reactions (int)
         /// </summary>
-        public IDictionary<string, double> ReactionScores { get; set; }
+        public Dictionary<string, double> ReactionScores { get; set; }
 
         /// <summary>
         /// Number of replies to this message

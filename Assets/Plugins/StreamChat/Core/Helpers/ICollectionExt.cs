@@ -8,7 +8,7 @@ namespace StreamChat.Core.Helpers
     /// </summary>
     internal static class ICollectionExt
     {
-        public static ICollection<TDto> TrySaveToDtoCollection<TSource, TDto>(this ICollection<TSource> source)
+        public static List<TDto> TrySaveToDtoCollection<TSource, TDto>(this ICollection<TSource> source)
             where TSource : ISavableTo<TDto>
         {
             if (source == null)
