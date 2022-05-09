@@ -26,13 +26,17 @@ namespace StreamChat.Libs.Serialization
         public bool TryPeekValue<TValue>(string serializedObj, string key, out TValue value)
         {
             var wrapperJObject = JObject.Parse(serializedObj);
-            if (!wrapperJObject.ContainsKey(key))
-            {
-                value = default;
+            // if (!wrapperJObject.ContainsKey(key))
+            // {
+            //     value = default;
+            //     return false;
+            // }
+           // var obj = wrapperJObject[key];
+           
+            if(!wrapperJObject.TryGetValue(key, StringComparison.Ordinal, out JToken obj)){
+                 value = default;
                 return false;
             }
-
-            var obj = wrapperJObject[key];
 
             if (obj is JObject childJObject)
             {

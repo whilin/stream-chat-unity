@@ -67,8 +67,8 @@ namespace StreamChat.Core
         public static IStreamChatClient CreateDefaultClient(AuthCredentials authCredentials)
         {
             var unityLogs = new UnityLogs();
-            var websocketClient = new WebsocketClient(unityLogs);
-            var httpClient = new HttpClientAdapter();
+            var websocketClient = new WebsocketWebGLClient(unityLogs);
+            var httpClient = new HttpClientWebGLAdapter();
             var serializer = new NewtonsoftJsonSerializer();
             var timeService = new UnityTime();
             var streamChatClient = new StreamChatClient(authCredentials, websocketClient, httpClient, serializer,
@@ -166,6 +166,7 @@ namespace StreamChat.Core
 
             while (_websocketClient.TryDequeueMessage(out var msg))
             {
+                UnityEngine.Debug.Log("StreamChatClient.Update Got message:"+msg);
                 HandleNewWebsocketMessage(msg);
             }
         }
@@ -320,7 +321,7 @@ namespace StreamChat.Core
 
             if (!_eventKeyToHandler.TryGetValue(type, out var handler))
             {
-                //_logs.Warning($"No message handler registered for `{type}`. Message not handled: " + msg);
+                _logs.Warning($"No message handler registered for `{type}`. Message not handled: " + msg);
                 return;
             }
 

@@ -66,8 +66,10 @@ namespace StreamChat.SampleProject.Views
             channel.NewMessageAdded += OnUpdated;
         }
 
-        private void OnUpdated(ChannelState channel, Message message)
-            => RebuildMessages(channel);
+        private void OnUpdated(ChannelState channel, Message message) {
+            UnityEngine.Debug.Log($"[Verbose] MessageListView OnUpdate {channel.Channel.Name}  msg:{message.Text}");
+            RebuildMessages(channel);
+        }
 
         private void ClearAll()
         {

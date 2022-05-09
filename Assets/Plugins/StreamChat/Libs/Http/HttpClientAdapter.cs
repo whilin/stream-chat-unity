@@ -3,45 +3,88 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace StreamChat.Libs.Http
-{
+namespace StreamChat.Libs.Http {
     /// <summary>
     /// .NET http client adapter
     /// </summary>
-    public class HttpClientAdapter : IHttpClient
-    {
-        public HttpClientAdapter()
-        {
-            _httpClient = new HttpClient();
+    public class HttpClientAdapter : IHttpClient {
+        public HttpClientAdapter () {
+            _httpClient = new HttpClient ();
         }
 
-        public void SetDefaultAuthenticationHeader(string value)
-            => _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(value);
+        public void SetDefaultAuthenticationHeader (string value) => _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue (value);
 
-        public void AddDefaultCustomHeader(string key, string value)
-            => _httpClient.DefaultRequestHeaders.Add(key, value);
+        public void AddDefaultCustomHeader (string key, string value) => _httpClient.DefaultRequestHeaders.Add (key, value);
 
-        public Task<HttpResponseMessage> GetAsync(Uri uri)
-            => _httpClient.GetAsync(uri);
+        public async Task<HttpReponseGenericMessage> GetAsync (Uri uri) {
+            var httpResponse = await _httpClient.GetAsync (uri);
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
 
-        public Task<HttpResponseMessage> PostAsync(Uri uri, string content)
-            => _httpClient.PostAsync(uri, new StringContent(content));
+            return genericMessage;
+        }
 
-        public Task<HttpResponseMessage> PostAsync(Uri uri, HttpContent content)
-            => _httpClient.PostAsync(uri, content);
+        public async Task<HttpReponseGenericMessage> PostAsync (Uri uri, string content) {
+            var httpResponse = await _httpClient.PostAsync (uri, new StringContent (content));
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
 
-        public Task<HttpResponseMessage> PostAsync(Uri uri, MultipartFormDataContent content)
-            => _httpClient.PostAsync(uri, content);
+            return genericMessage;
+        }
 
-        public Task<HttpResponseMessage> PostAsync(Uri uri, ByteArrayContent content)
-            => _httpClient.PostAsync(uri, content);
+        public async Task<HttpReponseGenericMessage> PostAsync (Uri uri, HttpContent content) {
+            var httpResponse = await _httpClient.PostAsync (uri, content);
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
 
-        public Task<HttpResponseMessage> PatchAsync(Uri uri, string content)
-            => _httpClient.SendAsync(new HttpRequestMessage(new HttpMethod("PATCH"), uri)
-                { Content = new StringContent(content) });
+            return genericMessage;
+        }
 
-        public Task<HttpResponseMessage> DeleteAsync(Uri uri)
-            => _httpClient.DeleteAsync(uri);
+        public async Task<HttpReponseGenericMessage> PostAsync (Uri uri, MultipartFormDataContent content) {
+            var httpResponse = await _httpClient.PostAsync (uri, content);
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
+
+            return genericMessage;
+        }
+
+        public async Task<HttpReponseGenericMessage> PostAsync (Uri uri, ByteArrayContent content) {
+            var httpResponse = await _httpClient.PostAsync (uri, content);
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
+
+            return genericMessage;
+        }
+
+        public async Task<HttpReponseGenericMessage> PatchAsync (Uri uri, string content) {
+            var httpResponse = await _httpClient.SendAsync (new HttpRequestMessage (new HttpMethod ("PATCH"), uri) { Content = new StringContent (content) });
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
+
+            return genericMessage;
+        }
+
+        public async Task<HttpReponseGenericMessage> DeleteAsync (Uri uri) {
+            var httpResponse = await _httpClient.DeleteAsync (uri);
+            var genericMessage = new HttpReponseGenericMessage ();
+            genericMessage.StatusCode = httpResponse.StatusCode;
+            genericMessage.IsSuccessStatusCode = httpResponse.IsSuccessStatusCode;
+            genericMessage.Content = await httpResponse.Content.ReadAsStringAsync ();
+
+            return genericMessage;
+        }
 
         private readonly HttpClient _httpClient;
     }

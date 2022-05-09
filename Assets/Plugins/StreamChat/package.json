@@ -1,0 +1,13 @@
+{
+    "name": "com.crazybox.streamchat-sdk",
+    "version": "1.0.1",
+    "displayName": "1. Streamchat SDK",
+    "description": "Streamchat SDK",
+    "keywords": [
+    ],
+    "author": {
+      "name": "Jongok",
+      "email": "e.jongok@gmail.com",
+      "url": ""
+    }
+  }
